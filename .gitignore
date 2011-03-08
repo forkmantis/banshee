@@ -1,0 +1,12 @@
+/cache/*
+/config/databases.yml
+/config/*.db
+/config/server.yml
+/data/fixtures/imported-*.yml
+/lib/filter/doctrine/base/*
+/lib/form/doctrine/base/*
+/lib/model/doctrine/base/*
+/log/*
+*.swp
+/web/css/scaffold/config.php
+/web/uploads/*
