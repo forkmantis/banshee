@@ -1,0 +1,31 @@
+__Process__
+1. Download feed at some interval
+2. Make a local record of each new item in the feed
+3. For each new record, attempt to find a single match from banshee's DB, and update the playcount and last playdate*
+4. If no matches are found, flag the record in some way so that the user can resolve by changing the name of the local song, or by flagging it as a song they do not own.
+5. If more than one match is found, use an algorithm to determine which one to update based on possibly ratings, playcount, and/or Last Played date.
+
+__SAMPLE RSS Data from Last.FM__
+
+<item>
+  <title>The Dillinger Escape Plan . When Good Dogs Do Bad Things</title>
+  <link>http://www.last.fm/music/The+Dillinger+Escape+Plan/_/When+Good+Dogs+Do+Bad+Things</link>
+  <pubDate>Wed, 9 Mar 2011 17:08:07 +0000</pubDate>
+  <guid>http://www.last.fm/user/forkmantis#1299690487</guid>
+  <description>http://www.last.fm/music/The+Dillinger+Escape+Plan</description>
+</item>
+<item>
+  <title>Shai Hulud . Chorus Of The Dissimilar</title>
+  <link>http://www.last.fm/music/Shai+Hulud/_/Chorus+Of+The+Dissimilar</link>
+  <pubDate>Wed, 9 Mar 2011 17:04:32 +0000</pubDate>
+  <guid>http://www.last.fm/user/forkmantis#1299690272</guid>
+  <description>http://www.last.fm/music/Shai+Hulud</description>
+</item>
+<item>
+  <title>AssüQed</title>
+  <link>http://www.last.fm/music/Ass%C3%BCck/_/Qed</link>
+  <pubDate>Wed, 9 Mar 2011 17:03:56 +0000</pubDate>
+  <guid>http://www.last.fm/user/forkmantis#1299690236</guid>
+  <description>http://www.last.fm/music/Ass%C3%BCck</description>
+</item>
+
