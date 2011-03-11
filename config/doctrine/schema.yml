@@ -1,0 +1,28 @@
+Tracks:
+  connection: doctrine
+  tableName: Tracks
+  columns:
+    trackid: { type: integer(8), notnull: false, primary: true, autoincrement: true }
+    uri: text()
+    mimetype: { type: text(), notnull: false }
+    artist: { type: text(), notnull: false }
+    performer: { type: text(), notnull: false }
+    albumtitle: { type: text(), notnull: false }
+    releasedate: { type: date(25), notnull: false }
+    asin: { type: text(), notnull: false }
+    label: { type: text(), notnull: false }
+    title: { type: text(), notnull: false }
+    genre: { type: text(), notnull: false }
+    year: { type: integer(8), notnull: false }
+    tracknumber: { type: integer(8), notnull: false }
+    trackcount: { type: integer(8), notnull: false }
+    duration: { type: integer(8), notnull: false }
+    trackgain: { type: float(), notnull: false }
+    trackpeak: { type: float(), notnull: false }
+    albumgain: { type: float(), notnull: false }
+    albumpeak: { type: float(), notnull: false }
+    rating: { type: integer(8), notnull: false }
+    numberofplays: { type: integer(8), notnull: false }
+    lastplayedstamp: { type: integer(8), notnull: false }
+    dateaddedstamp: { type: integer(8), notnull: false }
+    remotelookupstatus: { type: integer(8), notnull: false }
