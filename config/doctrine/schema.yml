@@ -1,28 +1,59 @@
-Tracks:
+CoreTracks:
   connection: doctrine
-  tableName: Tracks
+  options:
+    symfony:
+      filter: false
+  tableName: CoreTracks
   columns:
-    trackid: { type: integer(8), notnull: false, primary: true, autoincrement: true }
-    uri: text()
-    mimetype: { type: text(), notnull: false }
-    artist: { type: text(), notnull: false }
-    performer: { type: text(), notnull: false }
-    albumtitle: { type: text(), notnull: false }
-    releasedate: { type: date(25), notnull: false }
-    asin: { type: text(), notnull: false }
-    label: { type: text(), notnull: false }
-    title: { type: text(), notnull: false }
-    genre: { type: text(), notnull: false }
-    year: { type: integer(8), notnull: false }
-    tracknumber: { type: integer(8), notnull: false }
-    trackcount: { type: integer(8), notnull: false }
-    duration: { type: integer(8), notnull: false }
-    trackgain: { type: float(), notnull: false }
-    trackpeak: { type: float(), notnull: false }
-    albumgain: { type: float(), notnull: false }
-    albumpeak: { type: float(), notnull: false }
-    rating: { type: integer(8), notnull: false }
-    numberofplays: { type: integer(8), notnull: false }
-    lastplayedstamp: { type: integer(8), notnull: false }
-    dateaddedstamp: { type: integer(8), notnull: false }
-    remotelookupstatus: { type: integer(8), notnull: false }
+    PrimarySourceID: { type: integer, notnull: true }
+    TrackID: { type: integer, primary: true }
+    ArtistID: { type: integer }
+    AlbumID: { type: integer }
+    TagSetID: { type: integer }
+    ExternalID: { type: integer }
+    MusicBrainzID: { type: text }
+    Uri: { type: text }
+    UriType: { type: integer }
+    MimeType: { type: text }
+    FileSize: { type: integer }
+    BitRate: { type: integer }
+    Attributes: { type: integer, default: 5 }
+    LastStreamError: { type: integer, default: 0 }
+    Title: { type: text }
+    TitleLowered: { type: text }
+    TrackNumber: { type: integer }
+    TrackCount: { type: integer }
+    Disc: { type: integer }
+    DiscCount: { type: integer }
+    Duration: { type: integer }
+    Year: { type: integer }
+    Genre: { type: text }
+    Composer: { type: text }
+    Conductor: { type: text }
+    Grouping: { type: text }
+    Copyright: { type: text }
+    LicenseUri: { type: text }
+    Comment: { type: text }
+    Rating: { type: integer }
+    PlayCount: { type: integer }
+    SkipCount: { type: integer }
+    LastPlayedStamp: { type: integer }
+    LastSkippedStamp: { type: integer }
+    DateAddedStamp: { type: integer }
+    DateUpdatedStamp: { type: integer }
+    MetadataHash: { type: text }
+    BPM: { type: integer }
+    LastSyncedStamp: { type: integer }
+    FileModifiedStamp: { type: integer }
+  indexes:
+    uq_tracks:
+      type: unique
+      fields: [ArtistID, AlbumID, PrimarySourceID, Disc, TrackNumber, Uri]
+    idx_size_duration:
+      fields: [FileSize, Duration]
+    idx_external_id:
+      fields: [PrimarySourceID, ExternalID]
+    idx_uri:
+      fields: [PrimarySourceID, Uri]
+    idx_cover_art:
+      fields: [PrimarySourceID, AlbumID, DateUpdatedStamp]
