@@ -1,4 +1,5 @@
 /cache/*
+/config/app.yml
 /config/databases.yml
 /config/server.yml
 /data/*.db
@@ -6,6 +7,7 @@
 /lib/filter/doctrine/base/*
 /lib/form/doctrine/base/*
 /lib/model/doctrine/base/*
+/lib/task/testTask.class.php
 /log/*
 *.swp
 /web/css/scaffold/config.php
