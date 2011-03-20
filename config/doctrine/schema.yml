@@ -1,3 +1,44 @@
+Play:
+  connection: lastfm
+  options:
+    symfony: 
+      filter: false
+  columns:
+    track_id:
+    artist: { type: text }
+    name: { type: text }
+    album: { type: text }
+    gmt_date: { type: integer }
+  indexes:
+    uq_plays:
+      type: unique
+      fields: [track_id, gmt_date]
+
+CoreAlbums:
+  connection: doctrine
+  options:
+    symfony:
+      filter: false
+  tableName: CoreAlbums
+  columns:
+    AlbumID: { type: integer, primary: true }
+    ArtistID: { type: integer }
+    TagSetID: { type: integer }
+    MusicBrainzID: text
+    Title: { type: text, notnull: true }
+    TitleLowered: { type: text, notnull: true }
+    ReleaseDate: integer
+    Duration: integer
+    Year: integer
+    IsCompilation: integer
+    ArtistName: text
+    ArtistNameLowered: text
+    Rating: integer
+    ArtistNameSort: text
+    TitleSort: text
+    ArtistNameSortKey: blob
+    TitleSortKey: blob
+
 CoreTracks:
   connection: doctrine
   options:
@@ -45,6 +86,8 @@ CoreTracks:
     BPM: { type: integer }
     LastSyncedStamp: { type: integer }
     FileModifiedStamp: { type: integer }
+  relations:
+    Album: { local: AlbumID, foreign: AlbumID, class: CoreAlbums, foreignType: one }
   indexes:
     uq_tracks:
       type: unique
