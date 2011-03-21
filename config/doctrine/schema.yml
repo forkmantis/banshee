@@ -9,6 +9,7 @@ Play:
     name: { type: text }
     album: { type: text }
     gmt_date: { type: integer }
+    status: { type: enum, length: 8, values: ['Updated', 'No Match', 'Banshee'] }
   indexes:
     uq_plays:
       type: unique
