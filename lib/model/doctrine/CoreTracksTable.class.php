@@ -29,4 +29,18 @@ class CoreTracksTable extends Doctrine_Table
         limit($limit)->
         execute();
     }
+
+    /**
+     * Fetch (hopefuly) one record by artist, album and song title
+     *
+     * @return DoctrineResultSet
+     **/
+    public static function fetchByArtistAlbumTitle($artist, $album, $title)
+    {
+      return self::getInstance()->createQuery('ct')->
+        innerJoin('ct.Album a')->
+        where('ct.Title = ? AND a.ArtistName = ? AND a.Title = ?',
+          array($title, $artist, $album))->
+        execute();
+    }
 }
