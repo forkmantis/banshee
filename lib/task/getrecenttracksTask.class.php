@@ -54,7 +54,7 @@ EOF;
         , $track->name
       );
 
-      $play = new Play();
+      $play = PlayTable::getOrCreate($track->date);
       $play->artist = $track->artist;
       $play->name = $track->name;
       $play->album = $track->album;
@@ -66,7 +66,12 @@ EOF;
         $prevCount = $song->PlayCount;
         $prevDate = $song->LastPlayedStamp;
 
-        if ($song->updateFromLastFmPlay($track, sfConfig::get('allowable_offset_seconds', 300)))
+        if ($play->track_id) 
+        {
+          echo 'PREVIOUSLY UPDATED for '.$song->Title.' by '.$song->Album->ArtistName."\n";
+          echo "\n";
+        }
+        elseif ($song->updateFromLastFmPlay($track, sfConfig::get('allowable_offset_seconds', 300)))
         {
           $play->track_id = $song->TrackID;
           $play->status = 'Updated';
