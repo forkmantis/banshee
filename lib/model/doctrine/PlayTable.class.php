@@ -7,13 +7,29 @@
  */
 class PlayTable extends Doctrine_Table
 {
-    /**
-     * Returns an instance of this class.
-     *
-     * @return object PlayTable
-     */
-    public static function getInstance()
-    {
-        return Doctrine_Core::getTable('Play');
-    }
+  /**
+   * Returns an instance of this class.
+   *
+   * @return object PlayTable
+   */
+  public static function getInstance()
+  {
+      return Doctrine_Core::getTable('Play');
+  }
+
+  /**
+   * Checks for and returns existing record, or creates a new one
+   *
+   * @return Play
+   **/
+  public static function getOrCreate($timestamp)
+  {
+    $play = self::getInstance()->createQuery('p')->
+      where('p.gmt_date = ?', array($timestamp))->
+      fetchOne();
+
+    if (!($play instanceof Play)) $play = new Play();
+
+    return $play;
+  }
 }
