@@ -15,6 +15,22 @@ Play:
       type: unique
       fields: [track_id, gmt_date]
 
+CoreArtists:
+  connection: doctrine
+  options:
+    symfony:
+      filter: false
+  tableName: CoreArtists
+  columns:
+    ArtistID: { type: integer, primary: true }
+    TagSetID: integer
+    MusicBrainzID: text
+    Name: text
+    NameLowered: text
+    Rating: integer
+    NameSort: text
+    NameSortKey: blob
+
 CoreAlbums:
   connection: doctrine
   options:
@@ -89,6 +105,7 @@ CoreTracks:
     FileModifiedStamp: { type: integer }
   relations:
     Album: { local: AlbumID, foreign: AlbumID, class: CoreAlbums, foreignType: one }
+    Artist: { local: ArtistID, foreign: ArtistID, class: CoreArtists, foreignType: one }
   indexes:
     uq_tracks:
       type: unique
