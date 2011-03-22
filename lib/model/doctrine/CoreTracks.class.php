@@ -17,11 +17,7 @@ class CoreTracks extends BaseCoreTracks
    **/
   public function getGmLastPlayedStamp()
   {
-    return $this->getLastPlayedStamp() + (-1 * 
-      (
-        $this->getTimeZoneOffset() + $this->getDaylightSavingsOffset($this->LastPlayedStamp)
-      )
-    );
+    return $this->getLastPlayedStamp() + (-1 * ($this->getTimeZoneOffset()));
   }
 
   public function getTimeZoneOffset()
@@ -68,7 +64,15 @@ class CoreTracks extends BaseCoreTracks
    **/
   private function isAMatchOnTime($lastFmDate, $allowableOffset)
   {
-    return ($lastFmDate >= $this->getGmLastPlayedStamp() - $allowableOffset)
+    $isMatch = ($lastFmDate >= $this->getGmLastPlayedStamp() - $allowableOffset)
       && ($lastFmDate <= $this->getGmLastPlayedStamp() + $allowableOffset);
+    if (!$isMatch)
+    {
+      print '  Dates did not match for '.$this->name.' by '.$this->artist."\n";
+      print '    LastFmDate = '.date('Y-m-d H:i:s', $lastFmDate).' && '.
+        ' Our date = '.date('Y-m-d H:i:s', $this->LastPlayedStamp)."\n\n";
+    }
+
+    return $isMatch;
   }
 }
