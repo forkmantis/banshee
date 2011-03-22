@@ -39,7 +39,8 @@ class CoreTracksTable extends Doctrine_Table
     {
       return self::getInstance()->createQuery('ct')->
         innerJoin('ct.Album a')->
-        where('ct.Title = ? AND a.ArtistName = ? AND a.Title = ?',
+        innerJoin('ct.Artist art')->
+        where('ct.Title = ? AND art.Name = ? AND a.Title = ?',
           array($title, $artist, $album))->
         execute();
     }
