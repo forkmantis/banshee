@@ -91,6 +91,13 @@ EOF;
       {
         $play->status = 'No Match';
         print 'NO MATCH FOUND FOR '.$track->name.' by '.$track->artist.' on '.$track->album."\n";
+        
+        $possibleSongs = CoreTracksTable::fetchByArtistAlbum($track->artist, $track->album);
+        foreach ($possibleSongs as $possibility)
+        {
+          print '  '.$possibility->Title."\n";
+        }
+
         print "\n";
       }
       $play->save();

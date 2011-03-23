@@ -40,8 +40,24 @@ class CoreTracksTable extends Doctrine_Table
       return self::getInstance()->createQuery('ct')->
         innerJoin('ct.Album a')->
         innerJoin('ct.Artist art')->
-        where('ct.Title = ? AND art.Name = ? AND a.Title = ?',
+        where('ct.Title = ? COLLATE NOCASE AND art.Name = ? COLLATE NOCASE AND a.Title = ? COLLATE NOCASE',
           array($title, $artist, $album))->
+        execute();
+    }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author Me
+     **/
+    public static function fetchByArtistAlbum($artist, $album)
+    {
+      return self::getInstance()->createQuery('ct')->
+        innerJoin('ct.Album a')->
+        innerJoin('ct.Artist art')->
+        where('art.Name = ? COLLATE NOCASE AND a.Title = ? COLLATE NOCASE',
+          array($artist, $album))->
         execute();
     }
 }
