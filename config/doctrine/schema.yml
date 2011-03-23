@@ -15,6 +15,42 @@ Play:
       type: unique
       fields: [track_id, gmt_date]
 
+CorePlaylists:
+  connection: doctrine
+  options:
+    symfony:
+      form: false
+      filter: false
+  tableName: CorePlaylists
+  columns:
+    PrimarySourceID: integer
+    PlaylistID: { type: integer, primary: true }
+    Name: { type: text, notnull: true }
+    SortColumn: { type: integer, notnull: true, default: -1 }
+    SortType: { type: integer, notnull: true, default: 0 }
+    Special: { type: integer, notnull: true, default: 0 }
+    CachedCount: integer
+    IsTemporary: { type: integer, default: 0 }
+  relations:
+    Entries: { type: many, local: PlaylistID, foreign: PlaylistID, class: CorePlaylistEntries }
+
+CorePlaylistEntries:
+  connection: doctrine
+  options:
+    symfony:
+      form: false
+      filter: false
+  tableName: CorePlaylistEntries
+  columns:
+    EntryID: { type: integer, primary: true }
+    PlaylistID: { type: integer, notnull: true }
+    TrackID: { type: integer, notnull: true }
+    ViewOrder: { type: integer, notnull: true, default: 0 }
+    Generated: { type: integer, notnull: true, default: 0 }
+  relations:
+    Playlist: { type: one, local: PlaylistID, foreign: PlaylistID, class: CorePlaylists }
+    Track: { type: one, local: TrackID, foreign: TrackID, class: CoreTracks }
+
 CoreArtists:
   connection: doctrine
   options:
