@@ -16,4 +16,25 @@ class CorePlaylistsTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('CorePlaylists');
     }
+
+    /**
+     * Find a playlist by name, or create one with that name and return it.
+     *
+     * @return CorePlaylists
+     **/
+    public static function findByNameOrCreate($name)
+    {
+      $list = self::getInstance()->createQuery('p')->
+        where('p.Name = ?', array($name))->
+        fetchOne();
+
+      if (!($list instanceof CorePlaylists))
+      {
+        $list = new CorePlaylists();
+        $list->Name = $name;
+        $list->save();
+      }
+
+      return $list;
+    }
 }
