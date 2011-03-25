@@ -60,4 +60,24 @@ class CoreTracksTable extends Doctrine_Table
           array($artist, $album))->
         execute();
     }
-}
+
+    /**
+     * Fetch those w/ the lowest play to rating ratio, sorted by how long ago 
+     *  it was played
+     *
+     * @return Array
+     **/
+    public static function fetchLowestPlayedByRatio($offsetSeconds, $limit = 500)
+    {
+      return Doctrine_Query::create()->
+        select('a.Name, ct.Title, ct.TrackID, (1000 * 
+          (ct.PlayCount + ct.SkipCount) / ct.Rating) as Ratio')->
+        from('CoreTracks ct')->
+        innerJoin('ct.Artist a')->
+        where('ct.UriType IS NULL AND ct.LastPlayedStamp < '.(gmdate('U') - $offsetSeconds))->
+        orderBy('(1000 * (ct.PlayCount + ct.SkipCount) / ct.Rating), 
+          ct.LastPlayedStamp')->
+        limit($limit)->
+        execute()->toArray();
+     }
+  }
