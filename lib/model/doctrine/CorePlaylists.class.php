@@ -12,4 +12,17 @@
  */
 class CorePlaylists extends BaseCorePlaylists
 {
+
+  /**
+   * Clear all entries for this list
+   *
+   * @return integer
+   **/
+  public function clearAllEntries()
+  {
+    return CorePlaylistEntriesTable::getInstance()->createQuery('pe')->
+      where('pe.PlaylistID = ?', array($this->PlaylistID))->
+      delete()->
+      execute();
+  }
 }
