@@ -6,7 +6,7 @@ class getrecenttracksTask extends sfBaseTask
   {
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', 'frontend'),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'prod'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
       // add your own options here
       new sfCommandOption('from_date', null, sfCommandOption::PARAMETER_OPTIONAL, 'Date you want to retreive music for (in any valid format)', null),
