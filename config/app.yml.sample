@@ -7,3 +7,11 @@ all:
     web_dir:   /wpLastFmPlugin
     api_key:   xxxxxxx
     username:  xxxxxxx
+  allowable_timestamp_offset: 300
+  playlist_name: droid-static
+  ratio_playlist_count:
+    1: 5
+    2: 25
+    3: 200
+    4: 200
+    5: 70
