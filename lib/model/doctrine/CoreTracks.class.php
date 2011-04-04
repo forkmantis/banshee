@@ -66,13 +66,6 @@ class CoreTracks extends BaseCoreTracks
   {
     $isMatch = ($lastFmDate >= $this->getGmLastPlayedStamp() - $allowableOffset)
       && ($lastFmDate <= $this->getGmLastPlayedStamp() + $allowableOffset);
-    if (!$isMatch)
-    {
-      print '  Dates did not match for '.$this->Title.' by '.$this->Artist->Name."\n";
-      print '    LastFmDate = '.date('Y-m-d H:i:s', $lastFmDate).' && '.
-        ' Our date = '.date('Y-m-d H:i:s', $this->LastPlayedStamp)."\n\n";
-    }
-
     return $isMatch;
   }
 }
