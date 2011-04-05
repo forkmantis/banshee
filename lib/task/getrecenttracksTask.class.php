@@ -47,6 +47,8 @@ EOF;
       )
     );
 
+    $noMatchEmail = '';
+
     foreach ($result->recenttracks->track as $track) {
       $songs = CoreTracksTable::fetchByArtistAlbumTitle(
         $track->artist
@@ -71,7 +73,7 @@ EOF;
           echo 'PREVIOUSLY UPDATED for '.$song->Title.' by '.$song->Album->ArtistName."\n";
           echo "\n";
         }
-        elseif ($song->updateFromLastFmPlay($track, sfConfig::get('allowable_offset_seconds', 300)))
+        elseif ($song->updateFromLastFmPlay($track, sfConfig::get('app_allowable_offset_seconds', 300)))
         {
           $play->track_id = $song->TrackID;
           $play->status = 'Updated';
@@ -90,7 +92,10 @@ EOF;
       elseif ($songs->count() == 0)
       {
         $play->status = 'No Match';
-        print 'NO MATCH FOUND FOR '.$track->name.' by '.$track->artist.' on '.$track->album."\n";
+
+        $noMatchMsg = '"'.$track->name.'" by "'.$track->artist.'" on "'.$track->album."\"\n";
+        print 'NO MATCH FOUND FOR '.$noMatchMsg;
+        $noMatchEmail = $noMatchEmail.$noMatchMsg."\n";
         
         $possibleSongs = CoreTracksTable::fetchByArtistAlbum($track->artist, $track->album);
         foreach ($possibleSongs as $possibility)
@@ -102,5 +107,21 @@ EOF;
       }
       $play->save();
     }
+
+    if ($noMatchEmail)
+    {
+      include_once sfConfig::get('sf_root_dir').'/lib/vendor/symfony/lib/vendor/swiftmailer/swift_required.php';
+      $transport = Swift_MailTransport::newInstance();
+      $mailer = Swift_Mailer::newInstance($transport);
+      $message = Swift_Message::newInstance();
+
+      $message->setFrom(sfConfig::get('app_email_from'));
+      $message->setTo(sfConfig::get('app_email_to'));
+      $message->setSubject('Mismatched songs for '.Date('Y-m-d'));
+      $message->setBody($noMatchEmail);
+      $mailer->send($message);
+    }
+
+    print 'no match message:'."\n".$noMatchEmail;
   }
 }
