@@ -66,6 +66,8 @@ CoreArtists:
     Rating: integer
     NameSort: text
     NameSortKey: blob
+  relations:
+    Tracks: { local: ArtistID, foreign: ArtistID, type: many, class: CoreTracks }
 
 CoreAlbums:
   connection: doctrine
