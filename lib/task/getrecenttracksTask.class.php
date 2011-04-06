@@ -12,6 +12,7 @@ class getrecenttracksTask extends sfBaseTask
       new sfCommandOption('from_date', null, sfCommandOption::PARAMETER_OPTIONAL, 'Date you want to retreive music for (in any valid format)', null),
       new sfCommandOption('time_offset', null, sfCommandOption::PARAMETER_OPTIONAL, 'How far back from the End Date (in seconds) to grab data', (24 * 60 * 60) - 1),
       new sfCommandOption('limit', null, sfCommandOption::PARAMETER_OPTIONAL, 'Maximum number of records to retreive', 200),
+      new sfCommandOption('send_email', null, sfCommandOption::PARAMETER_OPTIONAL, 'Send emails of tracks that could not be matched', false),
     ));
 
     $this->namespace        = 'lastfm';
@@ -108,7 +109,7 @@ EOF;
       $play->save();
     }
 
-    if ($noMatchEmail)
+    if ($options['send_email'] && $noMatchEmail)
     {
       include_once sfConfig::get('sf_root_dir').'/lib/vendor/symfony/lib/vendor/swiftmailer/swift_required.php';
       $transport = Swift_MailTransport::newInstance();
@@ -121,7 +122,5 @@ EOF;
       $message->setBody($noMatchEmail);
       $mailer->send($message);
     }
-
-    print 'no match message:'."\n".$noMatchEmail;
   }
 }
