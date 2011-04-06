@@ -7,13 +7,13 @@
  */
 class CoreArtistsTable extends Doctrine_Table
 {
-    /**
-     * Returns an instance of this class.
-     *
-     * @return object CoreArtistsTable
-     */
-    public static function getInstance()
-    {
-        return Doctrine_Core::getTable('CoreArtists');
-    }
+  /**
+   * Returns an instance of this class.
+   *
+   * @return object CoreArtistsTable
+   */
+  public static function getInstance()
+  {
+    return Doctrine_Core::getTable('CoreArtists');
+  }
 }
