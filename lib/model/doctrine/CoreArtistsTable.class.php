@@ -16,4 +16,23 @@ class CoreArtistsTable extends Doctrine_Table
   {
     return Doctrine_Core::getTable('CoreArtists');
   }
+     
+  /**
+   * Fetch a list of top bands by song count and footprint (sum of ratings)
+   *
+   * @return Array
+   **/
+  public static function fetchSongCountAndFootprint($limit = 50)
+  {
+    return Doctrine_Query::create()->
+      select('ct.ArtistID, a.Name, SUM(ct.Rating) as Footprint, COUNT(ct.TrackID) as Songs')->
+      from('CoreTracks ct')->
+      innerJoin('ct.Artist a')->
+      where('ct.Uri like ?', array('file:/%'))->
+      groupBy('ct.ArtistID, a.Name')->
+      orderBy('Songs desc')->
+      limit($limit)->
+      execute()->
+      toArray();
+  }
 }
